@@ -4,6 +4,8 @@ import FormInput from '../components/FormInput';
 
 import FormContainer from '../components/FormContainer';
 
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { AuthStackNavigator } from '../../App';
 interface Props {}
 
 const SignIn: FC<Props> = () => {
@@ -11,8 +13,14 @@ const SignIn: FC<Props> = () => {
     email: '',
     password: '',
   });
+  const navigation = useNavigation<NavigationProp<AuthStackNavigator>>();
+
   return (
-    <FormContainer btnTitle="Sign In" navLinkText="Don't have a account?">
+    <FormContainer
+      onLinkPressed={() => navigation.navigate('SignUp')}
+      btnTitle="Sign In"
+      navLinkText="Don't have a account?"
+    >
       <FormInput
         label={'Email'}
         placeholder={'email@gmial.com'}

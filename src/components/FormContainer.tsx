@@ -8,6 +8,7 @@ interface Props {
   btnTitle: string;
   onSubmit?(): void;
   navLinkText?: string;
+  onLinkPressed?(): void;
 }
 
 const FormContainer: FC<Props> = ({
@@ -15,6 +16,7 @@ const FormContainer: FC<Props> = ({
   btnTitle,
   onSubmit,
   navLinkText,
+  onLinkPressed,
 }) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
@@ -26,7 +28,9 @@ const FormContainer: FC<Props> = ({
         {children}
         <PrimaryButton title={btnTitle} onPress={onSubmit} />
         <View style={styles.navLinkContainer}>
-          <Text style={styles.navLink}>{navLinkText}</Text>
+          <Text onPress={onLinkPressed} style={styles.navLink}>
+            {navLinkText}
+          </Text>
         </View>
       </View>
     </SafeAreaView>
@@ -42,21 +46,6 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 20,
     paddingTop: 150,
-  },
-  input: {
-    borderColor: '#888',
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 20,
-  },
-  label: {
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-  value: {
-    color: '#333',
-    marginBottom: 10,
   },
   titleContainer: {},
   title: {
