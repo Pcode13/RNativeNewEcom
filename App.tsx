@@ -23,24 +23,24 @@ const App: FC<Props> = () => {
 
     //using Fetch method
 
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-      },
-    })
-      .then(result => {
-        if (!result.ok) {
-          const errorRes = result.json();
-          console.error(errorRes);
-        } else {
-          const res = result.json();
-          console.warn(res);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // fetch(url, {
+    //   method: 'GET',
+    //   headers: {
+    //     'content-type': 'application/json',
+    //   },
+    // })
+    //   .then(result => {
+    //     if (!result.ok) {
+    //       const errorRes = result.json();
+    //       console.error(errorRes);
+    //     } else {
+    //       const res = result.json();
+    //       console.warn(res);
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }, []);
 
   return <AuthNavigator theme={Theme} />;

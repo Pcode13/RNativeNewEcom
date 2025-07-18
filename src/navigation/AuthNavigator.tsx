@@ -13,8 +13,8 @@ export type AuthStackNavigator = {
 
 const AuthStack = createStackNavigator<AuthStackNavigator>({
   screens: {
-    SignIn,
     SignUp,
+    SignIn,
     OTP,
   },
   screenOptions: {
