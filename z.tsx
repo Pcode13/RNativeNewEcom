@@ -71,7 +71,6 @@ return (
   </SafeAreaView>
 );
 
-
 // import React, { FC } from 'react';
 
 // import SignIn from './src/views/signIn';
@@ -86,7 +85,7 @@ return (
 
 import React, { FC, useEffect } from 'react';
 
-import SignIn from './src/views/signIn';
+import SignIn from './src/views/AuthScreens/signIn';
 import { OneSignal, LogLevel } from 'react-native-onesignal';
 import { Text, View } from 'react-native';
 

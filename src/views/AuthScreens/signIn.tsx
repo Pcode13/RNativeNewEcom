@@ -1,14 +1,15 @@
 import React, { FC, useState } from 'react';
 
-import FormInput from '../components/FormInput';
+import FormInput from '../../components/FormInput';
 
-import FormContainer from '../components/FormContainer';
+import FormContainer from '../../components/FormContainer';
 
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { AuthStackNavigator } from '../navigation/AuthNavigator';
-import Client from '../apiServices/Client';
+import { AuthStackNavigator } from '../../navigation/AuthNavigator';
+import Client from '../../apiServices/Client';
 import { AxiosError } from 'axios';
-import ErrorMessage from '../components/ErrorMessage';
+import ErrorMessage from '../../components/ErrorMessage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 interface Props {}
 type errorType = Record<string, string[] | undefined>;
 const SignIn: FC<Props> = () => {
@@ -27,7 +28,9 @@ const SignIn: FC<Props> = () => {
     setErrors({});
     try {
       const { data } = await Client.post(`/auth/sign-in`, signInInfo);
-      console.log('Sign Up successful:', data);
+      console.log(data);
+      await AsyncStorage.setItem('auth_token', data.token);
+      navigation.navigate('Home', { data: data.profile });
     } catch (err) {
       console.log('Error during sign up:', err);
       if (err instanceof AxiosError) {

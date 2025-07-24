@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react';
 
-import FormInput from '../components/FormInput';
+import FormInput from '../../components/FormInput';
 
-import FormContainer from '../components/FormContainer';
+import FormContainer from '../../components/FormContainer';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { AuthStackNavigator } from '../navigation/AuthNavigator';
+import { AuthStackNavigator } from '../../navigation/AuthNavigator';
 import { AxiosError } from 'axios';
-import ErrorMessage from '../components/ErrorMessage';
-import Client from '../apiServices/Client';
+import ErrorMessage from '../../components/ErrorMessage';
+import Client from '../../apiServices/Client';
 
 interface Props {}
 type errorType = Record<string, string[] | undefined>;

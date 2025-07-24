@@ -1,21 +1,21 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { createStaticNavigation } from '@react-navigation/native';
 
-import SignIn from '../views/signIn';
-import SignUp from '../views/SignUp';
-import OTP from '../views/OTPScreen';
+import SignIn from '../views/AuthScreens/signIn';
+import SignUp from '../views/AuthScreens/SignUp';
+import Home from '../views/MainScreens/Home';
 
 export type AuthStackNavigator = {
   SignIn: undefined;
   SignUp: undefined;
-  OTP: undefined;
+  Home: { data: { name: string; email: string } };
 };
 
 const AuthStack = createStackNavigator<AuthStackNavigator>({
   screens: {
     SignUp,
     SignIn,
-    OTP,
+    Home,
   },
   screenOptions: {
     headerShown: false,
