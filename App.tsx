@@ -1,21 +1,18 @@
-import React, { FC, useEffect } from 'react';
-import AuthNavigator from './src/navigation/AuthNavigator';
-import { DefaultTheme } from '@react-navigation/native';
-import { AuthContext } from './src/context/AuthProvider';
-import AppNavigator from './src/navigation';
+import React, { FC } from 'react';
 
-
+import ThemeView from './src/views/ThemeView';
+import { ThemeProvider } from './src/context/ThemeContext';
 
 interface Props {}
 
 // const url = 'http://192.168.22.112:5555/';
-const Theme: ReactNavigation.Theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: '#ffffff',
-  },
-};
+// const Theme: ReactNavigation.Theme = {
+//   ...DefaultTheme,
+//   colors: {
+//     ...DefaultTheme.colors,
+//     background: '#ffffff',
+//   },
+// };
 
 const App: FC<Props> = () => {
   // useEffect(() => {
@@ -46,9 +43,12 @@ const App: FC<Props> = () => {
   //   //   });
   // }, []);
 
-  
-  return <AppNavigator/>
-
+  // return <AppNavigator/>
+  return (
+    <ThemeProvider>
+      <ThemeView />
+    </ThemeProvider>
+  );
 };
 
 export default App;

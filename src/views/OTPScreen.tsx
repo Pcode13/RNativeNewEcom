@@ -1,11 +1,21 @@
-import React, { FC, useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { FC, useState, useEffect, useContext } from 'react';
+import { View, StyleSheet, Text, Button } from 'react-native';
 import OTPContainer from '../components/OTPContainer';
+import { UserContext } from '../context/AuthNameContext';
 
 interface Props {}
 
 const OTPScreen: FC<Props> = () => {
   const [enableLink, setEnableLink] = useState(true);
+ const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error('UserContext must be used within a UserProvider');
+  }
+
+  const { userName, setUserName } = context;
+
+  console.log('User Name:', userName);
   const [time, setTime] = useState(1);
   useEffect(() => {
     setInterval(() => {
@@ -27,6 +37,12 @@ const OTPScreen: FC<Props> = () => {
         >
           {!enableLink ? `wait for ${time} sec` : `Didn't get OTP ?`}
         </Text>
+
+        <Text style={{ fontSize: 18 }}>Hello, {userName}!</Text>
+        <Button
+          title="Change Name to Pragati"
+          onPress={() => setUserName('Pragati')}
+        />
       </View>
     </View>
   );
