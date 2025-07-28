@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator({
     Home: {
       screen: Home,
       options: {
+        headerShown: false,
         title: 'Home',
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => (
@@ -24,6 +25,7 @@ const Tab = createBottomTabNavigator({
     Card: {
       screen: Card,
       options: {
+        headerShown: false,
         title: 'Cart',
         tabBarLabel: 'Cart',
         tabBarIcon: ({ color, size }) => (
@@ -36,6 +38,7 @@ const Tab = createBottomTabNavigator({
     Profile: {
       screen: Fav,
       options: {
+        headerShown: false,
         title: 'Fav',
         tabBarLabel: 'Fav',
         tabBarIcon: ({ color, size }) => (
@@ -48,6 +51,7 @@ const Tab = createBottomTabNavigator({
     Fav: {
       screen: Profile,
       options: {
+        headerShown: false,
         title: 'Profile',
         tabBarLabel: 'Profile',
         tabBarIcon: ({ color, size }) => (

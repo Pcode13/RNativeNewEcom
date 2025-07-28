@@ -8,6 +8,7 @@ import { AuthStackNavigator } from '../../navigation/AuthNavigator';
 import { AxiosError } from 'axios';
 import ErrorMessage from '../../components/ErrorMessage';
 import Client from '../../apiServices/Client';
+import { useAuth } from '../../context/AuthProvider';
 
 interface Props {}
 type errorType = Record<string, string[] | undefined>;
@@ -22,13 +23,14 @@ const SignUp: FC<Props> = () => {
   const [errors, setErrors] = useState<errorType>({});
   const [error, setError] = useState('');
   const navigation = useNavigation<NavigationProp<AuthStackNavigator>>();
-
+  const { login } = useAuth();
   const handleSubmit = async () => {
     setError('');
     setErrors({});
     try {
       const { data } = await Client.post(`/auth/sign-up`, signUPInfo);
-      console.log('Sign Up successful:', data);
+      await login({ email: signUPInfo.email, password: signUPInfo.password });
+      console.log(data);
     } catch (err) {
       console.log('Error during sign up:', err);
       if (err instanceof AxiosError) {
