@@ -61,6 +61,7 @@ const Home: FC<Props> = ({}) => {
     setSelectedCategory(category);
     // fetch products by category
     try {
+      
       if (category === 'All') category = '';
       const { data } = await Client.get<{ products: Product[] }>(
         '/product/products/' + category,
