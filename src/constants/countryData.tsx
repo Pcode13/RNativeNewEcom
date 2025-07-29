@@ -13,3 +13,12 @@ export const countryData: Country[] = [
   { code: 'CA', name: 'Canada', dial_code: '+1' },
   // Add more countries as needed
 ];
+
+export const FormatPrice = (price: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'PHP',
+  });
+
+  return formatter.format(price);
+};
