@@ -2,15 +2,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation } from '@react-navigation/native';
 import AntDesign from '@react-native-vector-icons/ant-design';
 
-import Home from '../views/MainScreens/Home';
 import Card from '../views/MainScreens/Card';
 import Profile from '../views/MainScreens/Profile';
 import Fav from '../views/MainScreens/Fav';
+import HomeStack from './HomeNavigator';
 
 const Tab = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: Home,
+    HomeNavigator: {
+      screen: HomeStack,
       options: {
         headerShown: false,
         title: 'Home',

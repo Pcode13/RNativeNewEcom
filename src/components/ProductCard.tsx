@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, Text, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, Pressable } from 'react-native';
 import { FormatPrice } from '../constants/countryData';
 export type Product = {
   id: number;
@@ -15,15 +15,16 @@ export type Product = {
 
 interface Props {
   product: Product;
+  onPress(): void
 }
 const { width } = Dimensions.get('screen');
 export const offset = 10;
 
-const ProductCard: FC<Props> = ({ product }) => {
+const ProductCard: FC<Props> = ({ product,onPress }) => {
   const imageWidth = width - offset * 4;
   const imageHeight = (imageWidth * 9) / 16;
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Image
         source={{ uri: product?.poster }}
         style={{ width: imageWidth, height: imageHeight, borderWidth: 1 }}
@@ -35,7 +36,7 @@ const ProductCard: FC<Props> = ({ product }) => {
         <Text style={styles.mrp}>{FormatPrice(product.price?.mrp)}</Text>
         <Text>{FormatPrice(product.price?.sale)}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

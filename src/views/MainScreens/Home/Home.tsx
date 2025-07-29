@@ -1,15 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { AuthStackNavigator } from '../../navigation/AuthNavigator';
+// import { StackScreenProps } from '@react-navigation/stack';
+// import { AuthStackNavigator } from '../../../navigation/AuthNavigator';
 
-import Client from '../../apiServices/Client';
+import Client from '../../../apiServices/Client';
 import { FlashList } from '@shopify/flash-list';
-import ProductCard, { offset } from '../../components/ProductCard';
-import { Product } from '../../components/ProductCard';
-import CategoryList from '../../components/CategoryList';
-import CategoryBtn from '../../components/ CategoryBtn';
-type Props = StackScreenProps<AuthStackNavigator, 'Home'>;
+import ProductCard, { offset } from '../../../components/ProductCard';
+import { Product } from '../../../components/ProductCard';
+import CategoryList from '../../../components/CategoryList';
+import CategoryBtn from '../../../components/ CategoryBtn';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { HomeStackNavigatorProps } from '../../../navigation/HomeNavigator';
+
+// type Props = StackScreenProps<AuthStackNavigator, 'Home'>;
 // type Product = {
 //   id: number;
 //   title: string;
@@ -22,8 +25,11 @@ type Props = StackScreenProps<AuthStackNavigator, 'Home'>;
 //   };
 // };
 
+interface Props {}
+
 const Home: FC<Props> = ({}) => {
   // const authContext = useAuth();
+  const navigation = useNavigation<NavigationProp<HomeStackNavigatorProps>>();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -61,7 +67,6 @@ const Home: FC<Props> = ({}) => {
     setSelectedCategory(category);
     // fetch products by category
     try {
-      
       if (category === 'All') category = '';
       const { data } = await Client.get<{ products: Product[] }>(
         '/product/products/' + category,
@@ -96,7 +101,14 @@ const Home: FC<Props> = ({}) => {
         // keyExtractor={(product) => product.id.toString()}
         keyExtractor={product => product.id.toString()}
         renderItem={({ item: product }) => {
-          return <ProductCard product={product} />;
+          return (
+            <ProductCard
+              product={product}
+              onPress={() =>
+                navigation.navigate('SingleProduct', { id: product.id })
+              }
+            />
+          );
         }}
         ItemSeparatorComponent={() => <View style={{ height: offset }} />}
       />
