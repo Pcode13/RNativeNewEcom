@@ -1,6 +1,13 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, Pressable } from 'react-native';
-import { FormatPrice } from '../constants/countryData';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Dimensions,
+  Pressable,
+} from 'react-native';
+import { FormatPrice } from '../../../../constants/countryData';
 export type Product = {
   id: number;
   title: string;
@@ -15,12 +22,12 @@ export type Product = {
 
 interface Props {
   product: Product;
-  onPress(): void
+  onPress(): void;
 }
 const { width } = Dimensions.get('screen');
 export const offset = 10;
 
-const ProductCard: FC<Props> = ({ product,onPress }) => {
+const ProductCard: FC<Props> = ({ product, onPress }) => {
   const imageWidth = width - offset * 4;
   const imageHeight = (imageWidth * 9) / 16;
   return (
@@ -44,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#dedede',
     borderRadius: 20,
-    gap: 5,
+    gap: 8,
     padding: offset,
   },
   title: {

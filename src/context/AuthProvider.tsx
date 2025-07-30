@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useEffect } from 'react';
 
 import React, { FC, useState } from 'react';
 import Client from '../apiServices/Client';
-import { Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 type Profile = { name: string; email: string };
 type signInInfo = { email: string; password: string };
@@ -72,12 +72,11 @@ const AuthProvider: FC<Props> = ({ children }) => {
     const { data } = await Client.post(`/auth/sign-in`, value);
     await AsyncStorage.setItem('auth_token', data.token);
     setIsAuth(true);
-    
   };
 
   return (
     <AuthContext.Provider value={{ isAuth, profile, logout, login }}>
-      {busy ? <Text>Loading...</Text> : children}
+      {busy ? <ActivityIndicator size="large" color="#007bff" /> : children}
       {/* {children} */}
     </AuthContext.Provider>
   );

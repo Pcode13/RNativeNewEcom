@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
+
+    marginBottom: '8%',
   },
   navLink: {
     fontWeight: 'bold',

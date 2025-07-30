@@ -12,6 +12,10 @@ import { HomeStackNavigatorProps } from '../../../navigation/HomeNavigator';
 import { StackScreenProps } from '@react-navigation/stack';
 import Client from '../../../apiServices/Client';
 import { FlashList } from '@shopify/flash-list';
+import PrimaryButton from '../../../components/PrimaryButton';
+import IconButton from '../../../components/IconButton';
+import { useCart } from '../../../context/CardProvider';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = StackScreenProps<HomeStackNavigatorProps, 'SingleProduct'>;
 
@@ -36,6 +40,7 @@ const SingleProduct: FC<Props> = ({ route }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number | null>(0);
   const productID = route.params.id;
 
+
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -52,21 +57,11 @@ const SingleProduct: FC<Props> = ({ route }) => {
     fetchDetails();
   }, [productID]);
 
-  //   const onViewableItemsChangeda = useRef(
-  //     (info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
-  //       console.log(info);
-  //     },
-  //   );
 
-  // const onViewableItemsChangeda = useRef(
-  //   (info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
-  //     console.log('Viewable Items:', info.viewableItems);
-  //     const activeIndex = info.viewableItems[0].index;
-  //     console.log(activeIndex);
-  //     if (activeIndex !== undefined && activeIndex !== null)
-  //       setCurrentSlideIndex(activeIndex);
-  //   },
-  // );
+  
+
+
+
 
   const onViewableItemsChanged = useRef(
     (info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -95,6 +90,8 @@ const SingleProduct: FC<Props> = ({ route }) => {
       </View>
     );
   const images = [product.poster, ...product.images];
+
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ marginTop: 16 }}>
@@ -141,6 +138,40 @@ const SingleProduct: FC<Props> = ({ route }) => {
           })}
         </View>
       </View>
+
+      <Text style={styles.title}>{product.title}</Text>
+      <Text style={styles.desTxt}>{product.description}</Text>
+
+      <View style={styles.bulletPoints}>
+        <Text style={styles.bulletTitle}>Key Feature</Text>
+        {product.bulletPoints.map((item, index) => {
+          return (
+            <View key={index} style={styles.points}>
+              <View style={styles.bullet} />
+              <View>
+                <Text style={styles.bulletTxt}>{item}</Text>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <View style={styles.buttonContainer}>
+        <PrimaryButton style={{ flex: 1 }} title="Buy Now" />
+        <View style={styles.IconBtnWrapper}>
+          <IconButton
+            iconName="shopping-cart"
+            iconSize={28}
+            onPress={() => cartContext?.updateCart(product, 1)}
+            style={styles.iconBtn}
+          />
+          <IconButton
+            iconName="heart"
+            iconSize={20}
+            onPress={() => console.log('Pressed!')}
+            style={styles.iconBtn}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -156,6 +187,51 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   noProduct: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  desTxt: {
+    fontSize: 16,
+  },
+  bulletPoints: {},
+  bulletTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 5,
+  },
+  points: {
+    flexDirection: 'row',
+    gap: 5,
+    alignItems: 'center',
+    paddingLeft: 10,
+  },
+  bullet: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'grey',
+  },
+  bulletTxt: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 10,
+  },
+  iconBtn: {
+    width: 50,
+  },
+  buyBtnWrapper: {
+    flex: 1,
+  },
+  IconBtnWrapper: {
+    flexDirection: 'row',
+    gap: 10,
+  },
 });
 
 export default SingleProduct;

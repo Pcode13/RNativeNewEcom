@@ -27,6 +27,7 @@ const Tab = createBottomTabNavigator({
       options: {
         headerShown: false,
         title: 'Cart',
+        // tabBarBadge: 9,
         tabBarLabel: 'Cart',
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="shopping-cart" color={color} size={size} />

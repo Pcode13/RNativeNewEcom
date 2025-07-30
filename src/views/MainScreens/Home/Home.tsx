@@ -1,13 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 // import { StackScreenProps } from '@react-navigation/stack';
 // import { AuthStackNavigator } from '../../../navigation/AuthNavigator';
 
 import Client from '../../../apiServices/Client';
 import { FlashList } from '@shopify/flash-list';
-import ProductCard, { offset } from '../../../components/ProductCard';
-import { Product } from '../../../components/ProductCard';
-import CategoryList from '../../../components/CategoryList';
+import ProductCard, { offset } from './HomeComponents/ProductCard';
+import { Product } from './HomeComponents/ProductCard';
+import CategoryList from './HomeComponents/CategoryList';
 import CategoryBtn from '../../../components/ CategoryBtn';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { HomeStackNavigatorProps } from '../../../navigation/HomeNavigator';
@@ -30,6 +35,7 @@ interface Props {}
 const Home: FC<Props> = ({}) => {
   // const authContext = useAuth();
   const navigation = useNavigation<NavigationProp<HomeStackNavigatorProps>>();
+  const [fetching, setFetching] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -59,7 +65,7 @@ const Home: FC<Props> = ({}) => {
         console.log(error);
       }
     };
-    fetchProduct();
+    fetchProduct().finally(() => setFetching(false));
     fetchCategories();
   }, []);
 
@@ -77,6 +83,15 @@ const Home: FC<Props> = ({}) => {
     }
   };
 
+  if (fetching)
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+      >
+        {/* <Text>Fetching Product ...</Text> */}
+        <ActivityIndicator size="large" color="#007bff" />
+      </View>
+    );
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ marginTop: 30 }}>
