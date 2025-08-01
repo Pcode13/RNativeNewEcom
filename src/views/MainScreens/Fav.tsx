@@ -11,9 +11,8 @@ import { useFavorite } from '../../context/FavoriteProvider';
 import { FormatPrice } from '../../constants/countryData';
 import Icon from '@react-native-vector-icons/ant-design';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { FlashList } from '@shopify/flash-list';
 import { FavoriteNavigatorProps } from '../../navigation/FavoriteNavigator';
-// import {FavoriteNavigatorProps} from '../navigation/FavoriteNavigator';
+
 
 interface Props {}
 
