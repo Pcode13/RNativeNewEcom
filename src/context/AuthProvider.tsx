@@ -13,6 +13,7 @@ interface DefaultAuthContext {
   profile?: Profile | null;
   logout: () => void;
   login: (value: signInInfo) => void;
+  updateProfile(value: Profile): void;
 }
 
 export const AuthContext = createContext<DefaultAuthContext>({
@@ -20,6 +21,7 @@ export const AuthContext = createContext<DefaultAuthContext>({
   profile: null,
   logout: () => {},
   login: () => {},
+  updateProfile() {},
 });
 
 interface Props {
@@ -68,6 +70,10 @@ const AuthProvider: FC<Props> = ({ children }) => {
     }
   };
 
+  const updateProfile = async (value: Profile) => {
+    setProfile(value);
+  };
+
   const login = async (value: signInInfo) => {
     const { data } = await Client.post(`/auth/sign-in`, value);
     await AsyncStorage.setItem('auth_token', data.token);
@@ -75,7 +81,9 @@ const AuthProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuth, profile, logout, login }}>
+    <AuthContext.Provider
+      value={{ isAuth, profile, updateProfile, logout, login }}
+    >
       {busy ? <ActivityIndicator size="large" color="#007bff" /> : children}
       {/* {children} */}
     </AuthContext.Provider>

@@ -19,10 +19,10 @@
     "@react-navigation/stack": "^7.4.2",
     "@shopify/flash-list": "^1.8.3",
     "axios": "^1.10.0",
-    "pushy-react-native": "^1.0.57",
     "react": "19.1.0",
     "react-native": "0.80.1",
     "react-native-gesture-handler": "^2.27.1",
+    "react-native-image-picker": "^8.2.1",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.11.1"
   },
