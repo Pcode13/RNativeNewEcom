@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useState,
-} from 'react';
-
+import { createContext, FC, ReactNode, useContext, useState } from 'react';
 export type Product = {
   id: number;
   title: string;
@@ -19,6 +12,7 @@ export type Product = {
   images: string[];
   bulletPoints: string[];
 };
+
 type cartItem = {
   product: Product;
   count: number;
@@ -30,27 +24,35 @@ interface ICartContext {
   removeFromCart(product: Product): void;
   clearCart(): void;
   countAllItems(): number;
-  countTotalPrice(): string;
+  countTotalPrice(): number;
 }
+
 const CartContext = createContext<ICartContext | null>(null);
 
 interface Props {
-  children?: ReactNode;
+  children: ReactNode;
 }
-const CardProvider: FC<Props> = ({ children }) => {
+
+const CartProvider: FC<Props> = ({ children }) => {
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
-  console.log('cartItem', cartItems);
+
   const updateCart = (product: Product, qty: number) => {
     const finalCartItems = [...cartItems];
     const index = finalCartItems.findIndex(
       item => item.product.id === product.id,
     );
+
+    /* if the given product is not in the cart,
+        add this as new with the given qty */
     if (index === -1) {
       finalCartItems.push({ count: qty, product });
     } else {
+      // if the given product is already in the cart just update the qty
       finalCartItems[index].count += qty;
     }
 
+    // if the given qty is in negative and final qty becomes zero
+    // remove that product from the cart
     if (finalCartItems[index]?.count <= 0) {
       removeFromCart(product);
     } else {
@@ -58,14 +60,27 @@ const CardProvider: FC<Props> = ({ children }) => {
     }
   };
 
-  const removeFromCart = (product: Product) => {};
-  //      const clearCart=()=>{}
+  const removeFromCart = (product: Product) => {
+    setCartItems(oldItems => {
+      return oldItems.filter(item => item.product.id !== product.id);
+    });
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const countAllItems = () => {
     return cartItems.reduce((acc, cartItem) => (acc += cartItem.count), 0);
-
-    // return cartItems.reduce((acc, cartItem) => (acc += cartItem.count), 0);
   };
-  //  const  countTotalPrice=()=>{}
+
+  const countTotalPrice = () => {
+    const total = cartItems.reduce(
+      (acc, cartItem) => (acc += cartItem.count * cartItem.product.price.sale),
+      0,
+    );
+    return total;
+  };
 
   return (
     <CartContext.Provider
@@ -73,9 +88,9 @@ const CardProvider: FC<Props> = ({ children }) => {
         items: cartItems,
         updateCart,
         removeFromCart,
-        // clearCart,
+        clearCart,
         countAllItems,
-        // countTotalPrice
+        countTotalPrice,
       }}
     >
       {children}
@@ -83,6 +98,5 @@ const CardProvider: FC<Props> = ({ children }) => {
   );
 };
 
-export default CardProvider;
-
 export const useCart = () => useContext(CartContext);
+export default CartProvider;

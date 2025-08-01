@@ -4,7 +4,7 @@ import AntDesign from '@react-native-vector-icons/ant-design';
 
 import Card from '../views/MainScreens/Card';
 import Profile from '../views/MainScreens/Profile';
-import Fav from '../views/MainScreens/Fav';
+import FavoriteStack from './FavoriteNavigator';
 import HomeStack from './HomeNavigator';
 
 const Tab = createBottomTabNavigator({
@@ -36,8 +36,8 @@ const Tab = createBottomTabNavigator({
         tabBarInactiveTintColor: '#000',
       },
     },
-    Profile: {
-      screen: Fav,
+    Fav: {
+      screen: FavoriteStack,
       options: {
         headerShown: false,
         title: 'Fav',
@@ -49,7 +49,7 @@ const Tab = createBottomTabNavigator({
         tabBarInactiveTintColor: '#000',
       },
     },
-    Fav: {
+    Profile: {
       screen: Profile,
       options: {
         headerShown: false,

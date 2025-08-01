@@ -18,7 +18,8 @@ interface IconButtonProps extends PressableProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const IconButton: FC<IconButtonProps> = ({
+const 
+IconButton: FC<IconButtonProps> = ({
   iconName,
   iconSize = 24,
   iconColor = '#000000',

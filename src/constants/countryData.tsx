@@ -17,7 +17,7 @@ export const countryData: Country[] = [
 export const FormatPrice = (price: number) => {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'PHP',
+    currency: 'USD',
   });
 
   return formatter.format(price);

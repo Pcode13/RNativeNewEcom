@@ -16,6 +16,7 @@ import PrimaryButton from '../../../components/PrimaryButton';
 import IconButton from '../../../components/IconButton';
 import { useCart } from '../../../context/CardProvider';
 import { useNavigation } from '@react-navigation/native';
+import { useFavorite } from '../../../context/FavoriteProvider';
 
 type Props = StackScreenProps<HomeStackNavigatorProps, 'SingleProduct'>;
 
@@ -39,7 +40,8 @@ const SingleProduct: FC<Props> = ({ route }) => {
   const [product, setProduct] = useState<ProductDetail>();
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number | null>(0);
   const productID = route.params.id;
-
+  const cartContext = useCart();
+  const favContext = useFavorite();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -56,12 +58,6 @@ const SingleProduct: FC<Props> = ({ route }) => {
     };
     fetchDetails();
   }, [productID]);
-
-
-  
-
-
-
 
   const onViewableItemsChanged = useRef(
     (info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -90,7 +86,6 @@ const SingleProduct: FC<Props> = ({ route }) => {
       </View>
     );
   const images = [product.poster, ...product.images];
-
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -167,7 +162,8 @@ const SingleProduct: FC<Props> = ({ route }) => {
           <IconButton
             iconName="heart"
             iconSize={20}
-            onPress={() => console.log('Pressed!')}
+            iconColor={favContext?.isFav(product) ? 'red' : '#000000'}
+            onPress={() => favContext?.updateFavorite(product)}
             style={styles.iconBtn}
           />
         </View>
